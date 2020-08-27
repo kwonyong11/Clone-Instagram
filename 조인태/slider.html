@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="css/default.css">
+        <style>
+            body {
+                background: rgb(250,250,250);
+            }
+            .test-container{
+                width: 60vmin;
+                height: 60vmin;
+                margin: 100px auto 0 auto;
+            }
+            .container {
+                margin: auto auto;
+                position: relative;
+                overflow: hidden;
+                height: 100%;
+                width: 100%;
+                border: 1px solid #ddd;
+            }
+            .slide-list {
+                height: 100%;
+                display: flex;
+                position:absolute;
+                transition: 0.2s
+            }
+            .slide-item {
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            .switch {
+                position: relative;
+                width: 30px;
+                height: 30px;
+                border: 0;
+                background: #ddd;
+                border-radius: 50%;
+                color: #777;
+                text-align: center;
+                font-size: 1.5rem;
+            }
+            .slide-switch-left {
+                left: 0;
+                top: calc(50% - 15px);
+            }
+            .slide-switch-right {
+                left: calc(100% - 65px);
+                top: calc(50% - 15px);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="test-container">
+            <div class="container">
+                <ul class="slide-list">
+                    <li class="slide-item" style="background-image: url(images/test1.jpg);"></li>
+                    <li class="slide-item" style="background-image: url(images/test2.jpg);"></li>
+                    <li class="slide-item" style="background-image: url(images/test3.jpg);"></li>
+                </ul>
+                <input type="button" class='switch slide-switch-left' value="‹">
+                <input type="button" class='switch slide-switch-right' value="›">
+            </div>
+        </div>
+            
+        <script>
+            const log = console.log;
+            const container = document.querySelector(".container");
+            const slideList = document.querySelector(".slide-list");
+            const slideItem = document.querySelectorAll(".slide-item");
+            const LslideSwitch = document.querySelector('.slide-switch-left');
+            const RslideSwitch = document.querySelector('.slide-switch-right');
+            let slideLength = slideItem.length;
+            let i =0;
+            slideList.style.left = `0px`;
+            let slideIndex = 0;
+            let containerWidth =0;
+            const setLayout = ()=>{
+                containerWidth = container.clientWidth;
+                slideList.style.width = (containerWidth * slideLength) +'px';
+            }
+            window.addEventListener('load', () => {
+                setLayout();
+            })
+            window.addEventListener('resize', function() {
+                setLayout();
+                slideList.style.left =0;
+                slideIndex =0;
+            });
+            LslideSwitch.addEventListener('click', () => {
+                leftSlideHandler();
+            })
+            RslideSwitch.addEventListener('click', () => {
+                rightSlideHandler();
+            })
+            function leftSlideHandler() {
+                if(slideIndex === 0) return;
+                slideIndex--;
+                slideList.style.left = -(containerWidth * slideIndex) +'px';
+            }
+            function rightSlideHandler() {
+                if(slideIndex === slideLength-1) return;
+                slideList.style.left = -(containerWidth * (slideIndex+1)) +'px';
+                slideIndex++;
+            }
+        </script>
+    </body>
+</html>
