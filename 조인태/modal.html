@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/default.css">
+</head>
+<style>
+  html {
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  svg {
+    margin: 1rem;
+  }
+  .modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display:none;
+  }
+  .modal-box {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.7rem;
+    /* justify-content: center; */
+  }
+  .modal-menu {
+    font-family: 'Noto Sans KR', sans-serif;
+    width: 28rem;
+    height: 3.3rem;
+    font-size: 1rem;
+    font-weight: 200;
+    border-bottom: 0.5px solid #ddd;
+  }
+  .modal-menu:nth-child(1),
+  .modal-menu:nth-child(2) {
+    color: crimson;
+  }
+  .modal-menu:nth-child(7){
+    border-bottom: 0;
+  }
+  @media (max-width: 800px) {
+    .modal-menu{
+      width: 18rem;
+    }
+  }
+</style>
+<body>
+  <svg class="modal-button" fill="#262626" height="16" viewBox="0 0 48 48" width="16">
+    <circle clip-rule="evenodd" cx="8" cy="24" fill-rule="evenodd" r="4.5"></circle>
+    <circle clip-rule="evenodd" cx="24" cy="24" fill-rule="evenodd" r="4.5"></circle>
+    <circle clip-rule="evenodd" cx="40" cy="24" fill-rule="evenodd" r="4.5"></circle>
+  </svg>
+  <div class="modal-container">
+    <!-- 
+      부적절한 콘텐츠 신고
+      팔로우 취소
+      게시물로 이동
+      공유하기
+      링크 복사
+      퍼가기
+      취소
+     -->
+    <div class="modal-box">
+      <button class="modal-menu report">부적절한 콘텐츠 신고</button>
+      <button class="modal-menu cancle-follow">팔로우 취소</button>
+      <button class="modal-menu move-post">게시물로 이동</button>
+      <button class="modal-menu share">공유하기</button>
+      <button class="modal-menu copy-link">링크 복사</button>
+      <button class="modal-menu fork">퍼가기</button>
+      <button class="modal-menu cancle">취소</button>
+    </div>
+  </div>
+  <script src="js/modal.js"></script>
+</body>
+</html>
