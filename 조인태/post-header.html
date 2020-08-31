@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/default.css">
+  <style>
+    .post-header-list svg {
+      margin: 1rem;
+    }
+    .post-header{
+      display: flex;
+      align-items: center;
+      height: 60px;
+    }
+    .post-header-list:nth-child(3) {
+      margin-left: auto;
+    }
+    .post-header-image {
+      display: block;
+      width: 50px;
+      height: 50px;
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin-left: 0.7rem;
+    }
+    .post-header-list:nth-child(2){
+      display:flex;
+      align-items: center;
+      margin-left: 0.5rem;
+    }
+    .post-header-list:nth-child(2) a {
+      color: #444;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <section class="post-header">
+    <div class="post-header-list">
+      <a href="#" style="background-image: url('images/프로필얼굴.png')" class="post-header-image"></a>
+    </div>
+    <div class="post-header-list">
+      <a href="#">Clone-Instagram</a>
+    </div>
+    <div class="post-header-list">
+      <svg class="modal-button" fill="#262626" height="16" viewBox="0 0 48 48" width="16">
+        <circle clip-rule="evenodd" cx="8" cy="24" fill-rule="evenodd" r="4.5"></circle>
+        <circle clip-rule="evenodd" cx="24" cy="24" fill-rule="evenodd" r="4.5"></circle>
+        <circle clip-rule="evenodd" cx="40" cy="24" fill-rule="evenodd" r="4.5"></circle>
+      </svg>
+    </div>
+  </section>
+</body>
+</html>

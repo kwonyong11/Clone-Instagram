@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/default.css">
+  <style>
+    .post-comment {
+      display: flex;
+      flex-direction: column;
+    }
+    .comment-list-link {
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .comment-list-content {
+      color: #333;
+    }
+    .comment-input {
+      border:0;
+      width: 100%;
+    }
+    .comment-submit {
+      border: 0;
+      height: 100%;
+      color: dodgerblue;
+      background:#fff;
+    }
+    .comment-input-box {
+      border: 1px solid #aaa;
+      display: flex;
+      align-items: center;
+      height: 2rem;
+      
+    }
+  </style>
+</head>
+<body>
+  <section class="post-comment">
+    <a href="#" class="whole-comment"></a>
+    <ul class="comment-list">
+      <li class="comment-item">
+        <a href="" class="comment-list-link">YongYong</a>
+        <span class="comment-list-content">권지용보다 권용</span>
+      </li>
+      <li class="comment-item">
+        <a href="" class="comment-list-link">DuckWoo</a>
+        <span class="comment-list-content">너무 멋지네요</span>
+      </li>
+    </ul>
+    <div class="comment-input-box">
+      <input type="text" class="comment-input" placeholder="댓글 달기">
+      <input type="submit" class="comment-submit" value="게시">
+    </div>
+  </section>
+</body>
+</html>
