@@ -20,12 +20,7 @@ create table post (post_id int(20) not null auto_increment,
 
 
 테이블 이름 : user_post -> 아이디, 게시글(index), 팔로우(id), 팔로워(id), 북마크한 게시글(id),
-create table user_post(
-  id varchar(20) not null, 
-  post_index int, 
-  follow varchar(20), 
-  follower varchar(20), 
-  bookmark_post varchar(20));
+create table user_post(id varchar(20) not null, post_index varchar(100), follow text, follower text, bookmark_post varchar(100));
 
 
 테이블 이름 : post_comment -> 아이디(id) , 게시글 index(int), 내용(txt), 좋아요(id), 시간(date)
