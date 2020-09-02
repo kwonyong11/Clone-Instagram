@@ -1,0 +1,36 @@
+1. DB
+
+테이블 이름 : user => 아이디(key) 비밀번호 닉네임 이름 
+create table user (id varchar(20) not null,
+   password varchar(20) not null,
+   nickname varchar(20) not null,
+   name varchar(20) not null,
+   primary key(id));
+
+
+테이블 이름 : post -> 게시글 index(int,key), 아이디(id) , 파일(이미지. 동영상)(varchar(20), 내용(txt), 댓글(id), 좋아요(id1 id2 ---), 시간(date)
+create table post (post_id int(20) not null auto_increment,
+   id varchar(20) not null,
+   file varchar(50) not null,
+   content text,
+   comment varchar(20),
+   likes varchar(20),
+   upload_date datetime not null,
+   primary key(post_id));
+
+
+테이블 이름 : user_post -> 아이디, 게시글(index), 팔로우(id), 팔로워(id), 북마크한 게시글(id),
+create table user_post(
+  id varchar(20) not null, 
+  post_index int, 
+  follow varchar(20), 
+  follower varchar(20), 
+  bookmark_post varchar(20));
+
+
+테이블 이름 : post_comment -> 아이디(id) , 게시글 index(int), 내용(txt), 좋아요(id), 시간(date)
+create table post_comment (id varchar(20) not null,
+   post_index int(20) not null,
+   content text not null,
+   likes varchar(20),
+   comment_date datetime not null);
