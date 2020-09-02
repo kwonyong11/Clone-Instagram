@@ -18,8 +18,7 @@
 .side_user_info > a {
   text-decoration: none;
   color: #262626;
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 14px;  
 }
 
 .side_user_info > div {
@@ -72,7 +71,7 @@
   text-decoration: none;
   color: #262626;
   font-size: 14px;
-  font-weight: bold;
+  
 }
 
 .recommend_info > div {
@@ -90,7 +89,6 @@
 button {
   text-decoration: none;
   border: 0;
-  background-color: white;
   color: #0095f6;
   font-weight: bold;
   font-size: 12px;
@@ -116,4 +114,10 @@ span {
   color: #c7c7c7;
   font-size: 11px;
   padding-left: 18px;
+}
+
+@media(max-width: 600px) {
+  .side {
+    display: none;
+  }
 }
