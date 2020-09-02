@@ -49,7 +49,8 @@
 }
 
 .story-switch {
-  position: absolute;
+  position: sticky;
+  flex-shrink: 0;
   width: 30px;
   height: 30px;
   border: 0;
@@ -59,7 +60,7 @@
   text-align: center;
   font-size: 1.5rem;
   cursor: pointer;
-  z-index: 100;
+  z-index: 0;
 }
 .story-switch-left {
   top: 35px;
