@@ -8,7 +8,6 @@ let homeIsFull = false;
 let directIsFull = false;
 let searchIsFull = false;
 let feedIsFull = false;
-let llooggoo = false;
 
 const homeHandler = () => {
   if (!homeIsFull) {
