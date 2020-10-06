@@ -1,10 +1,3 @@
-/**
- * 안녕하세요 이가희 입니다.
- * 저는 WEB 개발자 겸 어플 개발자를 위해 React 공부 중입니다.
- * 코드 추가수정
- */
-
-
 const checkLog = console.log;
 var cors = require('cors');
 const express = require('express');
@@ -79,23 +72,6 @@ app.get('/main_friend', (req, res, next) => {
     return res.end(JSON.stringify(results));
   })
 })
-
-// app.get('/feed_data',(req, res, next)=>{
-//   let pyOption = {
-//     mode: 'json',
-//     pythonPath: '',
-//     pythonOptions: ['-u'],
-//     scriptPath:'./public/py',
-//     args:[req.session.idname]
-//   }
-//   PythonShell.run('./feed-recommend.py',pyOption,(err, results)=>{
-//     if(err) {
-//       console.error(err);
-//     }
-//     console.log(results);
-//     return res.end(JSON.stringify(results));
-//   })
-// })
 
 app.get('/android_login', (req, res) => {
   db.query(`select id, password from user`, (err, data) => {
@@ -569,15 +545,3 @@ app.use((err, req, res, next) => {
   res.redirect('/error');
 })
 app.listen(3030, () => console.log('3030 포트 대기'))
-
-/**
- * 나ㅡㄴ 조인태이고 가장 마지막에 데이터를 입력해보자~
- * 
- * 아아ㅏ아앙
- * ㅁ니아럼ㅇ니ㅏ러
- * ㅣㅏㅁㄴㅇ러ㅣㅏㅁㄴ어리;만얼
- * ㅁㄴ아ㅣ런미아런ㅁ;ㅣㅏㄹ어
- * ㄴㅁㅇ리ㅏㄴ멍리ㅏ넝ㄹ
- * ㅁㄴㅇ리ㅏㅓㅁㄴ이라ㅓㅁㄴㅇㄹ;
- * 
- */
