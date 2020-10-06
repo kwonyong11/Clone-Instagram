@@ -30,7 +30,7 @@
   
   userNickname.innerHTML = mainAxiosData.nick;
   postLength.innerHTML = myPageAxiosData.post.length;
-  followerLength.innerHTML = followerAxiosData.length;
+  followerLength.innerHTML = followerAxiosData.length-1;
   followLength.innerHTML = followAxiosData.length-1;
   rightFeedNickname.innerHTML = mainAxiosData.nick;
   

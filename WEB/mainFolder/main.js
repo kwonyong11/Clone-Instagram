@@ -474,11 +474,15 @@ app.post('/delete_user', async (req, res, next)=>{
                   }
                   await fs.unlink(`./public/data/${req.session.idname}/1.jpg`)
                   await fs.rmdir(`./public/data/${req.session.idname}`)
-                  return res.end();
+                  await req.session.destroy((err) => {
+                    return res.end();
+                  });
                 }else {
                   await fs.unlink(`./public/data/${req.session.idname}/1.jpg`)
                   await fs.rmdir(`./public/data/${req.session.idname}`)
+                  await req.session.destroy((err) => {
                   return res.end();
+                  });
                 }
               })
             })
