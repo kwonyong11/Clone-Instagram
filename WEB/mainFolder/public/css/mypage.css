@@ -196,6 +196,7 @@ body{
 }
 .right-feed-contents p{
   display: inline;
+  width: 70%;
   margin: 1rem 0 0 1rem;
 }
 .right-feed-contents span {
@@ -205,6 +206,7 @@ body{
   font-size: 0.7rem;
   color: #666;
 }
+
 
 .right-feed-comment{
   display: block;
