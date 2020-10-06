@@ -6,6 +6,8 @@
 	const feedSlideList = document.querySelector('.feed-slide-list');
 	const hidden = document.querySelector('.hidden');
 	const rightFeedList = document.querySelector('.right-feed-list')
+	const feedPostModalContainer = document.querySelector('.feed-post-modal-container');
+
 	// rightFeedNickname.innerHTML = mainAxiosData.nick;
 	// const RightfeedNickname = document.querySelector('.right-feed-nickname');
 	// const RightfeedNicknameAxios = await axios.get('/main_data');
@@ -32,7 +34,7 @@
 	}
 	const feedSlideContainer = document.querySelector('.feed-slide-container');
 	let feedSlideItems;
-	const feedPostModalContainer = document.querySelector('.feed-post-modal-container');
+	feedSlideItems = [];
 	const getTarget = (elem, className)=>{
 		while(!elem.classList.contains(className)){
 			elem = elem.parentNode;
@@ -57,6 +59,7 @@
 				// ${feedAxiosData.post[feedItem.dataset.index].post_id}은 몇 번째 게시물인지/ ${feedAxiosData.images[feedItem.dataset.index][i]}은 몇 번째 게시물의 1.jpg 2.jpg, 3.jpg
 				feedSlideList.appendChild(feedSlideItems);
 			}
+			feedPostModalContainer.style.top = 0;
 			const rightFeedHeader = document.querySelector('.right-feed-header');
 			rightFeedHeader.children[0].style.backgroundImage=`url('../data/${feedItem.dataset.id}/1.jpg')` // feed 올린사람의 이미지
 			rightFeedHeader.children[1].innerHTML = feedItem.dataset.nickname; // feed 올린사람의 닉네임 dataset을 이용했기 때문에 
@@ -164,6 +167,7 @@
 		}else if(slideBox){
 		}else if(modalBox){
 			// console.log( modalBox.style.opacity)
+			feedPostModalContainer.style.top = '5rem';
 			feedSlideList.style.left = 0;
 			listIndex=0;
 			modalBox.style.opacity='0';
