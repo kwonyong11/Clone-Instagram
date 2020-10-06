@@ -5,8 +5,7 @@
 	const feedList = document.querySelector('.feed-list');
 	const feedSlideList = document.querySelector('.feed-slide-list');
 	const hidden = document.querySelector('.hidden');
-	const rightFeedList = document.querySelector('.right-feed-list')
-	const feedPostModalContainer = document.querySelector('.feed-post-modal-container');
+	const rightFeedList = document.querySelector('.right-feed-list');
 
 	// rightFeedNickname.innerHTML = mainAxiosData.nick;
 	// const RightfeedNickname = document.querySelector('.right-feed-nickname');
@@ -34,7 +33,7 @@
 	}
 	const feedSlideContainer = document.querySelector('.feed-slide-container');
 	let feedSlideItems;
-	feedSlideItems = [];
+	const feedPostModalContainer = document.querySelector('.feed-post-modal-container');
 	const getTarget = (elem, className)=>{
 		while(!elem.classList.contains(className)){
 			elem = elem.parentNode;
@@ -59,7 +58,6 @@
 				// ${feedAxiosData.post[feedItem.dataset.index].post_id}은 몇 번째 게시물인지/ ${feedAxiosData.images[feedItem.dataset.index][i]}은 몇 번째 게시물의 1.jpg 2.jpg, 3.jpg
 				feedSlideList.appendChild(feedSlideItems);
 			}
-			feedPostModalContainer.style.top = 0;
 			const rightFeedHeader = document.querySelector('.right-feed-header');
 			rightFeedHeader.children[0].style.backgroundImage=`url('../data/${feedItem.dataset.id}/1.jpg')` // feed 올린사람의 이미지
 			rightFeedHeader.children[1].innerHTML = feedItem.dataset.nickname; // feed 올린사람의 닉네임 dataset을 이용했기 때문에 
@@ -89,7 +87,7 @@
 			for(let i =0; i< feedCommentAxiosData.length; i++) {
 				feedCommentUL.innerHTML += feedCommentHTMLText;
 				if(feedItem.dataset.post_id == feedCommentAxiosData[i].post_id) {
-					// feedCommentUL.children[commentIndex].children[0].innerHTML = feedCommentAxiosData[i].;
+					feedCommentUL.children[commentIndex].children[0].style.backgroundImage = `url('../data/${feedCommentAxiosData[i].id}/1.jpg')`
 					feedCommentUL.children[commentIndex].children[1].innerHTML = feedCommentAxiosData[i].nickname;
 					feedCommentUL.children[commentIndex].children[2].innerHTML = feedCommentAxiosData[i].upload_date.split('T')[0];
 					feedCommentUL.children[commentIndex].children[3].innerHTML = feedCommentAxiosData[i].comment;
@@ -114,7 +112,7 @@
 		const slideBox = getTarget(e.target, 'feed-slide-container');
 		const rightBox = getTarget(e.target, 'feed-post-right-section');
 		const submit = getTarget(e.target, 'right-feed-bottom-submit');
-
+		const likeBtn = getTarget(e.target, 'like-btn');
 
 		// 댓글 
 		if(submit) {
@@ -125,6 +123,8 @@
 		    // <p class="right-feed-date">whdlsxo123</p>
 		    // <p class="right-feed-comment">안녕하세요</p>
 			// </li> 
+			let feedCommentAxios = await axios.post('/feed_comment_data',{postID:hidden.value});
+			let feedCommentAxiosData = feedCommentAxios.data;
 			await axios.post('/feed_insert_comment', {postID: hidden.value, comment_content: submit.previousElementSibling.value})
 			const rightFeedItems = document.createElement('li');
 			const rightFeedImage = document.createElement('a');
@@ -136,10 +136,12 @@
 			rightFeedNickname.className = 'right-feed-nickname';
 			rightFeedDate.className = 'right-feed-comment-date';
 			rightFeedComment.className = 'right-feed-comment';
-			rightFeedImage.style.backgroundImage = `url('../data/${feedAxiosData.post[0].post_id}/1.jpg')`
-			rightFeedNickname.innerHTML = feedAxiosData.post[0].nickname
+			rightFeedImage.style.backgroundImage = `url('../data/${feedAxiosData.post[0].id}/1.jpg')`;
+			for(let i =0; i< feedCommentAxiosData.length; i++) {
+				rightFeedNickname.innerHTML = feedCommentAxiosData[i].nickname;
+			}
 			rightFeedDate.innerHTML = `${year}-${month}-${date}`;
-			rightFeedComment.innerHTML = submit.previousElementSibling.value
+			rightFeedComment.innerHTML = submit.previousElementSibling.value;
 			rightFeedItems.appendChild(rightFeedImage)
 			rightFeedItems.appendChild(rightFeedNickname)
 			rightFeedItems.appendChild(rightFeedDate)
@@ -148,6 +150,8 @@
 			submit.previousElementSibling.value = null;
 			}
 		}
+
+		// if (like)
 		if(leftButton){
 			if(listIndex === 0){
 				return;
@@ -167,7 +171,6 @@
 		}else if(slideBox){
 		}else if(modalBox){
 			// console.log( modalBox.style.opacity)
-			feedPostModalContainer.style.top = '5rem';
 			feedSlideList.style.left = 0;
 			listIndex=0;
 			modalBox.style.opacity='0';
