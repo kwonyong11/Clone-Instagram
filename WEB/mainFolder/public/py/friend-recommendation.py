@@ -14,7 +14,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 user=sys.argv[1]
 db=pymysql.connect(
     user='root',
-    passwd='dnflwlq123',
+    passwd='dlwhwnzjqjrm',
     host='localhost',
     db='instagram',
     charset='utf8'
