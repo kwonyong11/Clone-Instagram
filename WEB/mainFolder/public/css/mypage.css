@@ -24,7 +24,10 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0px 0px 44px;
+  margin: auto;
+  border-bottom: 1px solid #bbb;
+  height: 13rem;
+  max-width: 1000px;
 }
 
 .user1 .user2 {
@@ -39,6 +42,7 @@ nav {
 .user-nickname {
   font-size: 28px;
   font-weight: 300;
+  margin: 0 1rem;
 }
 .user-secession {
   border: 1px solid rgb(219, 219, 219);
@@ -264,6 +268,22 @@ body{
   align-items: center;
   height: 3rem;
 }
+.mypage-post-count{
+  margin: 0 1rem;
+  text-decoration: none;
+  color: #333;
+}
+.mypage-follow {
+  margin: 0 1rem;
+  text-decoration: none;
+  color: #333;
+}
+.mypage-follower{
+  text-decoration: none;
+  margin: 0 1rem;
+  color: #333;
+}
+
 @media (max-width: 935px){
   .feed-post-modal-box{
       width: 80vw;

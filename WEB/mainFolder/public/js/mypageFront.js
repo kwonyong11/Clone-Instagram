@@ -25,6 +25,7 @@
   const userNavImg = document.querySelector('.user_img');
   const profileImage = document.querySelector('.profileImage');
   const myPageHeader = document.querySelector('.my-page-header');
+  const likeBtn = document.querySelector('.like-btn');
   userNavImg.style.backgroundImage =  `url('../data/${mainAxiosData.id}/1.jpg')`;
   profileImage.style.backgroundImage = `url('../data/${mainAxiosData.id}/1.jpg')`;
   
