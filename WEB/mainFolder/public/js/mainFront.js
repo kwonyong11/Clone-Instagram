@@ -543,8 +543,4 @@ window.addEventListener('load', async () => {
       isView = false;
     }
   })
-  Compass.addEventListener('click', async() => {
-    const feedAxios = await axios.get('/main_feed');
-    const feedRecommend = await axios.psot('/feed_recommend');
-  })
 });
