@@ -1,3 +1,9 @@
+/**
+ * 안녕하세요 이가희 입니다.
+ * 저는 WEB 개발자 겸 어플 개발자를 위해 React 공부 중입니다.
+ */
+
+
 const checkLog = console.log;
 var cors = require('cors');
 const express = require('express');
