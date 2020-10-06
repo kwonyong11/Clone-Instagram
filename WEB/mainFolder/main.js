@@ -439,6 +439,56 @@ app.post('/delete_process', (req, res, next) => {
     });
   });
 });
+app.post('/is_user', async (req, res, next)=>{
+  const is_user = req.body;
+  db.query(`select password from user where id='${req.session.idname}'`, (err, data)=>{
+    if(err) next(new Error('패스워드 조회실패'))
+    if(is_user.password == data[0].password){
+      return res.end(JSON.stringify('true'))
+    }else {
+      return res.end(JSON.stringify('false'))
+    }
+  })
+})
+app.post('/delete_user', async (req, res, next)=>{
+  db.query(`select post_id from post where id='${req.session.idname}'`, (err0, data0)=>{
+    db.query(`delete p from post_content as p left join post on post.post_id = p.post_id where post.id = '${req.session.idname}'`, (err1, data1)=>{
+      if(err1) next(new Error('포스트 컨텐트 삭제 실패'))
+      db.query(`delete p from post as p left join user on user.id = p.id where user.id='${req.session.idname}'`, (err2, data2)=>{
+        if(err2) next(new Error('포스트 삭제 실패'))
+        db.query(`delete from post_comment where id = '${req.session.idname}'`, (err3, data3)=>{
+          if(err3) next(new Error('포스트 댓글 삭제 실패'))
+          db.query(`delete from post_likes where likes_id='${req.session.idname}'`, (err4, data4)=>{
+            if(err4) next(new Error('포스트 좋아요 삭제 실패'))
+            db.query(`delete from following where id = '${req.session.idname}' or following_id = '${req.session.idname}';`, (err5, data5)=>{
+              if(err5) next(new Error('팔로잉 삭제 실패'))
+              db.query(`delete from user where id='${req.session.idname}'`,async (err6, data6)=>{
+                if(err6) next(new Error('아이디 삭제 실패'))
+                if(data0.length !==0){
+                  for (let i = 0; i < data0.length; i++) {
+                    const filename = await fs.readdir(`./public/data/${data0[i].post_id}`);
+                    for(let j=0; j<filename.length; j++){
+                      await fs.unlink(`./public/data/${data0[i].post_id}/${filename[j]}`);
+                    }
+                    await fs.rmdir(`./public/data/${data0[i].post_id}`)
+                  }
+                  await fs.unlink(`./public/data/${req.session.idname}/1.jpg`)
+                  await fs.rmdir(`./public/data/${req.session.idname}`)
+                  return res.end();
+                }else {
+                  await fs.unlink(`./public/data/${req.session.idname}/1.jpg`)
+                  await fs.rmdir(`./public/data/${req.session.idname}`)
+                  return res.end();
+                }
+              })
+            })
+          })
+        })
+      })
+    })
+  })
+})
+
 // 마이페이지 시작
 app.get('/mypage', async (req, res) => {
   const myPage = await fs.readFile('./public/html/mypage.html');
@@ -544,4 +594,4 @@ app.use((err, req, res, next) => {
   console.log(err);
   res.redirect('/error');
 })
-app.listen(3030, () => console.log('3030 포트 대기'))
+app.listen(4001, () => console.log('4001 포트 대기'))

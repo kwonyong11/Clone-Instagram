@@ -1,7 +1,6 @@
 body{
   width: 98vw;
   height: 100vh;
-  /* background: #ddd; */
 }
 
 nav {
@@ -19,6 +18,7 @@ nav {
   bottom:0;
   left:0;
   top:70px;
+  z-index: 10;
 }
 .my-page-header {
   display: flex;
@@ -26,12 +26,6 @@ nav {
   align-items: center;
   margin: 0px 0px 44px;
 }
-
-/* .profileImg {
-  width: 300px;
-  height: 150px;
-  margin-right: 30px;
-} */
 
 .user1 .user2 {
   margin-bottom: 20px;
@@ -51,6 +45,16 @@ nav {
   border-radius: 4px;
   padding: 5px 9px;
   font-size: 14px;
+  text-decoration: none;
+  z-index: 500;
+  cursor: pointer;
+}
+.user2 > a {
+  text-decoration: none;
+}
+.user2 > a:hover,
+.user2 > a:visited {
+  text-decoration: none;
 }
 
 .profileImage {
@@ -64,6 +68,7 @@ nav {
   background-repeat: no-repeat;
 }
 
+/* -----------------------------------------------*/
 body{
   width: 98vw;
   height: 100vh;
@@ -270,44 +275,3 @@ body{
       width: 100%;
   }
 }
-
-/* 회탈 모달 */
-/* .secession-modal-container {
-  z-index :20;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0,0,0,0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  display:none;
-}
-.modal-box {
-  background: white;
-  display: flex;
-  flex-direction: column;
-  border-radius: 0.7rem; 
-}
-.modal-menu {
-  font-family: 'Noto Sans KR', sans-serif;
-  width: 28rem;
-  height: 3.3rem;
-  font-size: 1rem;
-  font-weight: 200;
-  border-bottom: 0.5px solid #ddd;
-}
-.modal-menu:nth-child(1),
-.modal-menu:nth-child(2) {
-  color: crimson;
-}
-.modal-menu:nth-child(3){
-  border-bottom: 0;
-}
-@media (max-width: 800px) {
-  .modal-menu{
-    width: 18rem;
-  }
-} */

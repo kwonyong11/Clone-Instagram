@@ -1,4 +1,3 @@
-
 (async ()=>{
   const myPageAxios = await axios.post('/mypage');
   const myPageAxiosData = await myPageAxios.data;
@@ -11,7 +10,7 @@
 
   console.log(myPageAxiosData);
 
-  let feedSlideItems;
+  let feedSlideItems=[]
   const feedList = document.querySelector('.feed-list');
   const feedSlideList = document.querySelector('.feed-slide-list'); 
   const postLength = document.querySelector('.post-length');
@@ -25,7 +24,7 @@
   const rightFeedList = document.querySelector('.right-feed-list');
   const userNavImg = document.querySelector('.user_img');
   const profileImage = document.querySelector('.profileImage');
-
+  const myPageHeader = document.querySelector('.my-page-header');
   userNavImg.style.backgroundImage =  `url('../data/${mainAxiosData.id}/1.jpg')`;
   profileImage.style.backgroundImage = `url('../data/${mainAxiosData.id}/1.jpg')`;
   
@@ -58,21 +57,23 @@
     }
     return elem;
   }
-
-  // const userSecession = document.querySelector('.user-secession');
-  // userSecession.addEventListener('click', (e)=> {
-  //   const secessionModal_container = document.querySelector('.secession-modal-container');
-  //   const cancelModalHandler = (e) => {
-  //     if (e.target.className === `feed-post-modal-container` || e.target.className === `modal-menu no-secession`) {
-  //       secessionModal_container.style.display = `none`;
-  //     }
-  //   }
-  //   secessionModal_container.style.display = `flex`;
-  // })
-
+  myPageHeader.addEventListener('click', async(e)=>{
+    const userSecession = getTarget(e.target, 'user-secession')
+    if(userSecession) {
+      const password = window.prompt('비밀번호를 입력해주세요(확인 시 바로 탈퇴됩니다.)');
+      const isTrue = await axios.post('/is_user', {password})
+      const isTrueData = await isTrue.data;
+      if(isTrueData.startsWith('true')) {
+        await axios.post('/delete_user');
+        window.location.href = '/';
+        alert('탈퇴 되었습니다. 그동안 감사합니다.')
+      } else {
+        alert('비밀번호가 틀렸습니다.')
+      }
+    }
+  })
   feedList.addEventListener('click', async(e)=>{
     const feedItem = getTarget(e.target, 'feed-items');
-    console.log(e.target);
     // 게시글 클릭시 동적으로 이미지 개수 만큼 li 생성
     if(feedItem){
       for(let i=0; i<feedItem.dataset.imageCount; i++){
@@ -102,17 +103,11 @@
     console.log(commentAxiosData);
 
     const rightFeedImage = document.querySelector('.right-feed-image');
-    
-
     rightFeedImage.style.backgroundImage = `url('../data/${mainAxiosData.id}/1.jpg')`;
 
     for (let j = 0; j < commentAxiosData.length; j++) {
-      // console.log("1.",i,":",j);
       if (feedItem.dataset.post_id == commentAxiosData[j].post_id) {
-        console.log(feedList.children);
         rightFeedList.innerHTML += commentText;
-        // console.log(commentAxiosData);
-        // console.log("2.",i,":",j);
         rightFeedList.children[commentIndex].children[0].style.backgroundImage = `url('../data/${commentAxiosData[j].id}/1.jpg')`;
         rightFeedList.children[commentIndex].children[1].innerHTML = commentAxiosData[j].nickname;
         rightFeedList.children[commentIndex].children[2].innerHTML = commentAxiosData[j].upload_date.split('T')[0];
@@ -176,23 +171,20 @@
       }
       listIndex--;
       feedSlideList.style.left = `-${feedSlideContainer.clientWidth * listIndex}px`;
-      console.log(feedSlideList.style.left);
     } else if(rightButton) {
       if(listIndex === feedSlideItems.length-1){
         return;
       }
       listIndex++;
-      console.log(listIndex);
       feedSlideList.style.left = `-${feedSlideContainer.clientWidth * listIndex}px`;
-      console.log(feedSlideList.style.left);
     } else if(rightBox){
     } else if(slideBox){
     } else if(modalBox){
-      console.log( modalBox.style.opacity);
       modalBox.style.opacity = '0';
       feedPostModalContainer.style.zIndex = 0;
       feedSlideList.style.left = 0;
       listIndex = 0;
+
       for(let i=0; i<feedSlideItems.length; i++){
         feedSlideItems[i].remove();
       }
