@@ -42,7 +42,7 @@
         if (feedItem) {
             const commentAxios = await axios.post('/feed_comment_data', { postID: feedItem.dataset.post_id })
             const commentAxiosData = await commentAxios.data;
-            const likesAxios = await axios.post('feed_like_process', {postID: feedItem.dataset.post_id});
+            const likesAxios = await axios.post('/feed_like_process', {postID: feedItem.dataset.post_id});
             const likesAxiosData = await likesAxios.data;
             console.log(likesAxiosData)
             if(likesAxiosData.data1.length!==0){

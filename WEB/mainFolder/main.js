@@ -148,6 +148,7 @@ app.get('/like_process', (req, res) => {
     });
   });
 });
+
 app.post('/feed_like_process', (req, res) => {
   const postID = req.body;
   db.query(`select * from post_likes where likes_id ='${req.session.idname}' and post_id = ${postID.postID} order by post_id desc`, (err1, data1) => {
