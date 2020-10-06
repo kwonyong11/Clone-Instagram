@@ -218,6 +218,12 @@ app.post('/login', async (req, res) => {
 });
 
 // 회원가입 라우터
+app.post('/signup_get_id', (req, res, next)=>{
+  db.query('select id, nickname from user', (err, data)=>{
+    if(err) next(new Error('회원가입 아이디 중복확인 오류'));
+    return res.end(JSON.stringify(data));
+  })
+})
 app.post('/signup_process', (req, res, next) => {
   const user = req.body;
   db.query(`insert into user (id, password, nickname, name) values ('${user.id}', '${user.password}', '${user.nickname}', '${user.name}');`, (err1, data1) => {
