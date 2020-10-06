@@ -6,13 +6,12 @@
 	const feedSlideList = document.querySelector('.feed-slide-list');
 	const hidden = document.querySelector('.hidden');
 	const rightFeedList = document.querySelector('.right-feed-list');
-
+	const likeBtn = document.querySelector('.like-btn');
 	// rightFeedNickname.innerHTML = mainAxiosData.nick;
 	// const RightfeedNickname = document.querySelector('.right-feed-nickname');
 	// const RightfeedNicknameAxios = await axios.get('/main_data');
 	// console.log(RightfeedNicknameAxios);
 	// const RightfeedNicknameAxiosData = await RightfeedNicknameAxios.data;
-
 	console.log(feedAxiosData);
 
 	// RightfeedNickname.innerHTML = RightfeedNicknameAxiosData.nick;
@@ -70,14 +69,26 @@
 			feedSlideItems = document.querySelectorAll('.feed-slide-items');
 			feedSlideListWidth = feedSlideContainer.clientWidth * feedSlideItems.length;
 			feedSlideList.style.width = `${feedSlideListWidth}px`
+			feedPostModalContainer.style.top=0;
 			feedPostModalContainer.style.opacity= '1';
 			feedPostModalContainer.style.zIndex=20;
 
-			
 			let feedCommentAxios = await axios.post('/feed_comment_data',{postID:hidden.value});
 			let feedCommentAxiosData = feedCommentAxios.data;
 			console.log(feedCommentAxiosData);
 			let commentIndex = 0;
+			const likeAxios = await axios.post('feed_like_process',{postID:hidden.value});
+			const likeAxiosData = await likeAxios.data;
+			console.log(likeAxiosData);
+			if (likeAxiosData.data1.length !== 0) {
+				likeBtn.setAttribute('fill', '#ed4956')
+                likeBtn.children[0].setAttribute('d', "M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z");
+                likeBtn.nextElementSibling.innerHTML = `${likeAxiosData.data2.length}명`;
+			} else {
+                likeBtn.setAttribute('fill', '#262626')
+                likeBtn.firstElementChild.setAttribute('d', "M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z");
+                likeBtn.nextElementSibling.innerHTML = `${likeAxiosData.data2.length}명`;
+			}
 
 			let feedCommentHTML = await fetch('../lib/feedcomment');
 			let feedCommentHTMLText = await feedCommentHTML.text();
@@ -93,7 +104,6 @@
 					feedCommentUL.children[commentIndex].children[3].innerHTML = feedCommentAxiosData[i].comment;
 					commentIndex++;
 				}
-			
 			}
 		}
 	})
@@ -113,6 +123,25 @@
 		const rightBox = getTarget(e.target, 'feed-post-right-section');
 		const submit = getTarget(e.target, 'right-feed-bottom-submit');
 		const likeBtn = getTarget(e.target, 'like-btn');
+
+		if (likeBtn) {
+			if (likeBtn.getAttribute('fill') == '#262626') {
+				const likePostID = hidden.value;
+				await axios.post('/add_like', {likePostID})
+				likeBtn.setAttribute('fill', '#ed4956');
+				likeBtn.children[0].setAttribute('d',"M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z");
+				let likeCount = parseInt(likeBtn.nextElementSibling.innerHTML);
+				likeBtn.nextElementSibling.innerHTML = `${++likeCount}명`;
+			}
+			else {
+				const likePostID = hidden.value;
+				await axios.post('/cancel_like', {likePostID});
+                likeBtn.setAttribute('fill', '#262626')
+                likeBtn.firstElementChild.setAttribute('d', "M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z");
+                let likeCount = parseInt(likeBtn.nextElementSibling.innerHTML);
+                likeBtn.nextElementSibling.innerHTML = `${--likeCount}명`
+			}
+		}
 
 		// 댓글 
 		if(submit) {
@@ -137,9 +166,7 @@
 			rightFeedDate.className = 'right-feed-comment-date';
 			rightFeedComment.className = 'right-feed-comment';
 			rightFeedImage.style.backgroundImage = `url('../data/${feedAxiosData.post[0].id}/1.jpg')`;
-			for(let i =0; i< feedCommentAxiosData.length; i++) {
-				rightFeedNickname.innerHTML = feedCommentAxiosData[i].nickname;
-			}
+			rightFeedNickname.innerHTML = feedAxiosData.nickname;
 			rightFeedDate.innerHTML = `${year}-${month}-${date}`;
 			rightFeedComment.innerHTML = submit.previousElementSibling.value;
 			rightFeedItems.appendChild(rightFeedImage)
@@ -151,7 +178,6 @@
 			}
 		}
 
-		// if (like)
 		if(leftButton){
 			if(listIndex === 0){
 				return;
@@ -174,6 +200,7 @@
 			feedSlideList.style.left = 0;
 			listIndex=0;
 			modalBox.style.opacity='0';
+			feedPostModalContainer.style.top='4rem';
 			feedPostModalContainer.style.zIndex=0;
 			const slideItems = document.querySelectorAll('.feed-slide-items'); // feed 하나를 선택하고 닫고 또 다시 열면 이미지갯수 만큼 li태그가 또 생겨 -> 닫을때 3개를 삭제해줘.
 			for(let i=0; i<slideItems.length; i++) {
@@ -183,6 +210,10 @@
 			for(let i=0; i<rightFeedItem.length; i ++) {
 				rightFeedItem[i].remove();
 			}
+			const likeBtn = document.querySelector('.like-btn');
+			likeBtn.setAttribute('fill', '#262626')
+            likeBtn.firstElementChild.setAttribute('d', "M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z");
+            likeBtn.nextElementSibling.innerHTML = `0명`;
 		}
 	})
 	window.addEventListener('resize',()=>{
