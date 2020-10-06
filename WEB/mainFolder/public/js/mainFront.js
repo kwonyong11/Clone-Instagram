@@ -340,6 +340,7 @@ async function operateSlider() {
 async function operateModal() {
   const postWhole = document.querySelectorAll('.post-whole');
   const modalSVG = {};
+  console.log(modalSVG);
   for (let i = 0; i < postWhole.length; i++) {
     modalSVG[i] = postWhole[i].children[0].children[2].children[0];
   }

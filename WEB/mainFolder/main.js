@@ -439,6 +439,27 @@ app.post('/delete_process', (req, res, next) => {
     });
   });
 });
+app.post('/new_delete', (req, res, next)=>{
+  const post = req.body;
+  db.query(`delete from post where post_id = ${post.id}`, async (err1, data1) => {
+    if (err1) next(new Error('삭제 실패'));
+    db.query(`delete from post_content where post_id = ${post.id}`, async (err2, data2) => {
+      if (err2) next(new Error('삭제 실패'));
+      db.query(`delete from post_comment where post_id = ${post.id}`, async (err3, data3) => {
+        if (err3) next(new Error('삭제 실패'));
+        db.query(`delete from post_likes where post_id = ${post.id}`, async (err4, data4) => {
+          if (err4) next(new Error('삭제 실패'));
+          const filename = await fs.readdir(`./public/data/${post.id}`);
+          for (let i = 0; i < filename.length; i++) {
+            await fs.unlink(`./public/data/${post.id}/${filename[i]}`);
+          }
+          await fs.rmdir(`./public/data/${post.id}`)
+          return res.end();
+        });
+      });
+    });
+  });
+})
 app.post('/is_user', async (req, res, next)=>{
   const is_user = req.body;
   db.query(`select password from user where id='${req.session.idname}'`, (err, data)=>{

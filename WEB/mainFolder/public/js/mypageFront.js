@@ -195,6 +195,40 @@
     }
 
   })
+
+  const rightFeedHeader = document.querySelector('.right-feed-header');
+  const userModal_container = document.querySelector('.userModal-container');
+  const cancelModalHandler = (e) => {
+    if (e.target.className === `userModal-container` || e.target.className === `userModal-menu cancle`) {
+      userModal_container.style.display = `none`;
+    }
+  }
+  rightFeedHeader.addEventListener('click', (e) => {
+    const modalButton = getTarget(e.target, 'modal-button');
+    if(modalButton) {
+      userModal_container.style.display = 'flex';
+      console.log(hidden.value);
+    }
+  })
+
+  userModal_container.addEventListener('click', cancelModalHandler);
+
+  const delfeedItems = document.querySelectorAll('.feed-items');
+  const deletePost = document.querySelector('#delete-post');
+  deletePost.addEventListener('click', async () => {
+    console.log(hidden.value);
+    const id = hidden.value;
+    await axios.post('/new_delete' , {id} );
+    userModal_container.style.display="none";
+    feedPostModalContainer.style.zIndex = 0;
+    feedPostModalContainer.style.opacity = '0';
+    for(let i=0; i<delfeedItems.length; i++){
+      if(delfeedItems[i].dataset.post_id == id){
+        delfeedItems[i].remove();
+      }
+    }
+  })
+  
   
   window.addEventListener('resize',()=>{
     feedSlideListWidth = feedSlideContainer.clientWidth * feedSlideItems.length;
