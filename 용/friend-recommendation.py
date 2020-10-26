@@ -11,7 +11,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 user=sys.argv[1]
 db=pymysql.connect(
     user='root',
-    passwd='dnflwlq123',
+    passwd='hoseo9620!',
     host='localhost',
     db='instagram',
     charset='utf8'
@@ -30,14 +30,16 @@ user_post_df[['follow']][:1]
 # countvectorizer? 문서 집합에서 단어 토큰을 생성하고 각 단어의 수를 세어 BOW 인코딩한 벡터를 만듬
 # CountVectorizer를 적용하기 위해 공백문자로 word 단위가 구분되는 문자열로 변환.
 user_post_df['follow_literal']=user_post_df['follow'].apply(lambda x:(' ').join(x))
-
 #follow 문자열을 Count 백터화(나눈 문자의 출현 빈도를 세어 벡터(집함)로 변환)
-count_vect=CountVectorizer(min_df=0,ngram_range=(0,2))#min_df = 최소 비교문자 , ngram_range = 
-follow_mat=count_vect.fit_transform(user_post_df['follow_literal'])
+try:
+    count_vect=CountVectorizer(min_df=0,ngram_range=(1,2))#min_df = 최소 비교문자 , ngram_range = 
+    follow_mat=count_vect.fit_transform(user_post_df['follow_literal'])
+except ValueError:
+    count_vect=CountVectorizer(min_df=0,ngram_range=(0,2))
+    follow_mat=count_vect.fit_transform(user_post_df['follow_literal'])
 
 #각 id에 따른 팔로우별 cosine유사도 추출(백터 사이의 각도만으로 유사도를 추출)
 follow_sim=cosine_similarity(follow_mat,follow_mat)
-
 follow_sim_sorted_ind=follow_sim.argsort()[:,::-1]#index로 정렬 (::-1은 전체를 역순으로 조회)
 
 #유사도가 높은 id를 찾아 반환

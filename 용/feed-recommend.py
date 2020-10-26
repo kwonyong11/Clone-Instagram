@@ -7,7 +7,7 @@ import json
 import sys
 import warnings
 warnings.filterwarnings("ignore")
-user=sys.argv[1]
+user="권용"
 
 db=pymysql.connect(
     user='root',
@@ -55,7 +55,6 @@ try:
     likes_matrix_T.head()
 
     item_sim=cosine_similarity(likes_matrix_T,likes_matrix_T)
-
     item_sim_df=pd.DataFrame(data=item_sim,index=likes_matrix.columns,columns=likes_matrix.columns)
 
     item_sim_df.head(3)
@@ -68,7 +67,6 @@ try:
     #결국 각각에 대한 점수들이 매겨짐 -> 유사도에 따른 예측 점수
     likes_pred=predict_likes(likes_matrix.values,item_sim_df.values)
     likes_pred_matrix=pd.DataFrame(data=likes_pred,index=likes_matrix.index,columns=likes_matrix.columns)
-    likes_pred_matrix.head(3)
 
     #원본데이타의 점수와 예측 점수를 비교함
     #사용자가 조아요를 누른 게시글에 대해서만 예측성능평가 mse를 구함
@@ -80,7 +78,6 @@ try:
     #모든 데이터에 대해서 예측 점수 계산
     def predict_likes_sim(likes_arr,item_sim_arr):
         pred=np.zeros(likes_arr.shape)
-        print(likes_arr)
         for col in range(likes_arr.shape[1]):
             #유사도가 큰 순으로 모든 데이터 행렬의 index변환
             top_item=[np.argsort(item_sim_arr[:,col])[::-1]]
@@ -133,12 +130,12 @@ try:
         result=np.array(p.sort_values(by=['count'],ascending=False)['post_id']).astype('int').tolist()
         result=dict({user:result})
         print(result)
-        result=json.dumps(result)
+        # result=json.dumps(result)
         print(result)
     else :
         result=dict({user:result})
         print(result)
-        result=json.dumps(result)
+        # result=json.dumps(result)
         print(result)
 except KeyError:
     result=dict({user:''})
